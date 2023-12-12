@@ -1,0 +1,6 @@
+dependencies:
+  idf:
+    version: '>=5.0'
+description: Adam Simpkins' Embedded Utility Library
+repository: https://github.com/simpkins/asel.git
+version: 0.0.1

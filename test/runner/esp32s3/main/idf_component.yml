@@ -1,0 +1,5 @@
+dependencies:
+  asel:
+    path: ../../../..
+  test:
+    path: ../../..
