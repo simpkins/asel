@@ -16,6 +16,8 @@ void log_putc(char c) { std::putc(c, stderr); }
 void log_field(unsigned int n) { fprintf(stderr, "%u", n); }
 void log_field(int n) { fprintf(stderr, "%d", n); }
 
+void log_hex(unsigned int n) { fprintf(stderr, "%x", n); }
+
 void log_field(std::error_code ec) {
   log_puts("error_code(");
   log_field(ec.category().name());
@@ -42,6 +44,10 @@ void log_field(unsigned int n) {
   // TODO
 }
 
+void log_hex(unsigned int n) {
+  // TODO
+}
+
 void log_field(int n) {
   if (n < 0) {
     log_putc('-');
@@ -52,6 +58,25 @@ void log_field(int n) {
 }
 
 #endif // !ASEL_HAVE_STDLIB
+
+void log_hex(const void *data, unsigned int length) {
+  const uint8_t *data_u8 = static_cast<const uint8_t *>(data);
+  log_putc('\n');
+  for (unsigned int n = 0; n < length; ++n) {
+    if (n % 8 == 0) {
+      log_putc('-');
+    }
+    log_putc(' ');
+    log_hex((data_u8[n] >> 4) & 0x0f);
+    log_hex(data_u8[n] & 0x0f);
+    if (n % 8 == 7) {
+      log_putc('\n');
+    }
+  }
+  if (length % 8 != 0) {
+    log_putc('\n');
+  }
+}
 
 } // namespace asel
 

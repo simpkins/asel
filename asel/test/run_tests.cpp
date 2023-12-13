@@ -15,7 +15,7 @@ unsigned int run_tests() {
   unsigned int failed_tests = 0;
   while (test) {
     ++num_tests;
-    log_message("Running %s.%s...", test->suite, test->name);
+    log_message("Running ", test->suite, ".", test->name, "...");
     g_test_result = &test->result;
     g_test_result->reset();
 
