@@ -3,6 +3,9 @@
 
 namespace asel {
 
-void run_tests();
+/**
+ * Returns the number of failed tests.
+ */
+unsigned int run_tests();
 
 } // namespace asel

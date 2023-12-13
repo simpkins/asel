@@ -1,11 +1,16 @@
 set(
     asel_test_srcs
-    error_test.cpp
+    LogTest.cpp
+)
+
+set(
+    esp_test_srcs
+    EspErrorTest.cpp
 )
 
 if(ESP_PLATFORM)
     idf_component_register(
-        SRCS ${asel_test_srcs}
+        SRCS ${asel_test_srcs} ${esp_test_srcs}
         REQUIRES "asel"
         WHOLE_ARCHIVE
     )

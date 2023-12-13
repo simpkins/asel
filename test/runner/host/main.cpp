@@ -4,6 +4,6 @@
 #include <cstdio>
 
 extern "C" int main() {
-  asel::run_tests();
-  return 0;
+  const auto num_failures = asel::run_tests();
+  return num_failures == 0 ? 0 : 1;
 }

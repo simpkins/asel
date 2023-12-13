@@ -2,8 +2,7 @@
 #pragma once
 
 #include "asel/preproc.h"
-
-#include <system_error>
+#include "asel/test/TestResult.h"
 
 #define ASEL_TEST_CLASS_NAME(suite, name) ASEL_CONCAT4(Test_, suite, _, name)
 
@@ -13,10 +12,10 @@
     ASEL_TEST_CLASS_NAME(suite, name)                                          \
     () : ::asel::TestCase(ASEL_STRINGIFY(suite), ASEL_STRINGIFY(name)) {}      \
                                                                                \
-    std::error_code run() override;                                            \
+    void run() override;                                            \
   };                                                                           \
   ASEL_TEST_CLASS_NAME(suite, name) ASEL_UNIQUE_NAME(name);                    \
-  std::error_code ASEL_TEST_CLASS_NAME(suite, name)::run()
+  void ASEL_TEST_CLASS_NAME(suite, name)::run()
 
 namespace asel {
 
@@ -25,12 +24,13 @@ public:
   TestCase(); // TODO: delete
   explicit TestCase(const char *suite, const char *name);
 
-  virtual std::error_code run() = 0;
+  virtual void run() = 0;
 
   TestCase *next = nullptr;
 
   const char *const suite = nullptr;
   const char *const name = nullptr;
+  TestResult result;
 };
 
 } // namespace asel
