@@ -19,14 +19,14 @@ else()
     # Check to see if we are the top-level project, or if we are
     # being used via add_subdirectory() in some other project.
     if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
-        set(ASEL_MASTER_PROJECT ON)
+        set(ASEL_IS_PRIMARY_PROJECT ON)
         message(STATUS "CMake version: ${CMAKE_VERSION}")
     endif()
 
     # If we are the top-level project, globally apply some of our own compiler
     # flags.  When part of another project we let the top-level project choose
     # these flags.
-    if(ASEL_MASTER_PROJECT)
+    if(ASEL_IS_PRIMARY_PROJECT)
         include("${CMAKE_CURRENT_LIST_DIR}/cmake/compiler-settings.cmake")
     endif()
 
@@ -44,12 +44,14 @@ else()
         )
     endif()
 
-    add_subdirectory("test")
-    add_executable(asel_tests test/runner/host/main.cpp)
-    target_link_libraries(asel_tests PUBLIC asel_test_cases)
+    if (ASEL_IS_PRIMARY_PROJECT OR ASEL_ENABLE_TESTS)
+        add_subdirectory("test")
+        add_executable(asel_tests test/runner/host/main.cpp)
+        target_link_libraries(asel_tests PUBLIC asel_test_cases)
 
-    if(NOT CMAKE_CROSSCOMPILING)
-        include(CTest)
-        add_test(NAME asel COMMAND asel_tests)
+        if(NOT CMAKE_CROSSCOMPILING)
+            include(CTest)
+            add_test(NAME asel COMMAND asel_tests)
+        endif()
     endif()
 endif()
