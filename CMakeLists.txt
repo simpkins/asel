@@ -5,6 +5,9 @@ set(CMAKE_CXX_STANDARD 17)
 set(ASEL_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(
     srcs
+    asel/test/run_tests.cpp
+    asel/test/TestCase.cpp
+    asel/test/TestRegistry.cpp
 )
 
 if(ESP_PLATFORM)
