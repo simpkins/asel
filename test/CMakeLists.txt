@@ -16,9 +16,9 @@ if(ESP_PLATFORM)
     )
 else()
     add_library(
-        test_cases
+        asel_test_cases
         OBJECT
         "${asel_test_srcs}"
     )
-    target_link_libraries(test_cases PUBLIC asel)
+    target_link_libraries(asel_test_cases PUBLIC asel)
 endif()

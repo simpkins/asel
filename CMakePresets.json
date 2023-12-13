@@ -25,11 +25,19 @@
       }
     },
     {
-      "name": "at90usb1286",
-      "binaryDir": "build/at90usb1286",
+      "name": "avr-base",
+      "hidden": true,
       "cacheVariables": {
 	"CMAKE_BUILD_TYPE": "Release",
-        "CMAKE_TOOLCHAIN_FILE": "cmake/toolchain-at90usb1286.cmake"
+        "CMAKE_TOOLCHAIN_FILE": "cmake/toolchain-avr.cmake"
+      }
+    },
+    {
+      "name": "at90usb1286",
+      "binaryDir": "build/at90usb1286",
+      "inherits": ["avr-base"],
+      "environment": {
+        "CMAKE_AVR_MCU": "at90usb1286"
       }
     }
   ],

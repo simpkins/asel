@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.19)
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 20)
 
 set(ASEL_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(
@@ -16,6 +16,40 @@ if(ESP_PLATFORM)
 else()
     project(asel HOMEPAGE_URL https://github.com/simpkins/asel)
 
-    include("${CMAKE_CURRENT_LIST_DIR}/cmake/linux.cmake")
+    # Check to see if we are the top-level project, or if we are
+    # being used via add_subdirectory() in some other project.
+    if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+        set(ASEL_MASTER_PROJECT ON)
+        message(STATUS "CMake version: ${CMAKE_VERSION}")
+    endif()
+
+    # If we are the top-level project, globally apply some of our own compiler
+    # flags.  When part of another project we let the top-level project choose
+    # these flags.
+    if(ASEL_MASTER_PROJECT)
+        include("${CMAKE_CURRENT_LIST_DIR}/cmake/compiler-settings.cmake")
+    endif()
+
+    add_library(asel STATIC ${srcs})
+    target_include_directories(
+        asel PUBLIC
+        "${ASEL_ROOT_DIR}"
+    )
+    if(NOT CMAKE_SYSTEM_PROCESSOR STREQUAL avr)
+        # When building for AVR we don't have the stdlib,
+        # but use it on other platforms.
+        target_compile_definitions(
+            asel PUBLIC
+            ASEL_HAVE_STDLIB=1
+        )
+    endif()
+
     add_subdirectory("test")
+    add_executable(asel_tests test/runner/host/main.cpp)
+    target_link_libraries(asel_tests PUBLIC asel_test_cases)
+
+    if(NOT CMAKE_CROSSCOMPILING)
+        include(CTest)
+        add_test(NAME asel COMMAND asel_tests)
+    endif()
 endif()
