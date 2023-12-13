@@ -3,8 +3,7 @@
 
 #include "asel/test/TestCase.h"
 #include "asel/test/TestRegistry.h"
-
-#include <cstdio>
+#include "asel/log.h"
 
 namespace asel {
 
@@ -16,7 +15,7 @@ unsigned int run_tests() {
   unsigned int failed_tests = 0;
   while (test) {
     ++num_tests;
-    fprintf(stderr, "Running %s.%s\n", test->suite, test->name);
+    log_message("Running %s.%s...", test->suite, test->name);
     g_test_result = &test->result;
     g_test_result->reset();
 
@@ -24,18 +23,18 @@ unsigned int run_tests() {
     test = test->next;
 
     if (g_test_result->num_failures() > 0) {
-      fprintf(stderr, "  Failed\n");
+      log_message("  Failed");
       ++failed_tests;
     } else {
-      fprintf(stderr, "  Success\n");
+      log_message("  Success");
     }
   }
 
   if(failed_tests == 0) {
-    fprintf(stderr, "Ran %u tests\n", num_tests);
-    fprintf(stderr, "100%% successful\n");
+    log_message("Ran ", num_tests, " tests");
+    log_message("100% successful");
   } else {
-    fprintf(stderr, "%u of %u tests failed\n", failed_tests, num_tests);
+    log_message(failed_tests, " of ", num_tests, " tests failed");
   }
   return failed_tests;
 }
