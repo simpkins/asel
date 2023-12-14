@@ -11,8 +11,8 @@
 #define ASEL_ASSERT_TRUE(expr) ASEL_EXPECT_BOOL_(expr, true, true)
 #define ASEL_ASSERT_FALSE(expr) ASEL_EXPECT_BOOL_(expr, false, true)
 
-#define ASEL_EXPECT_EQ(a, b) ASEL_EXPECT_CMP_(a, b, ::asel::test_cmp_eq, "!=", false)
-#define ASEL_EXPECT_NE(a, b) ASEL_EXPECT_CMP_(a, b, ::asel::test_cmp_ne, "==", false)
+#define ASEL_EXPECT_EQ(a, b) ASEL_EXPECT_CMP_(a, b, ::asel::test_cmp_eq, "==", false)
+#define ASEL_EXPECT_NE(a, b) ASEL_EXPECT_CMP_(a, b, ::asel::test_cmp_ne, "!=", false)
 #if 0
 #define ASEL_EXPECT_GT(a, b) ASEL_EXPECT_CMP_(a, b, >, "<=", false)
 #define ASEL_EXPECT_GE(a, b) ASEL_EXPECT_CMP_(a, b, >=, "<", false)
@@ -46,13 +46,12 @@
     }                                                                          \
   } while (0)
 
-#define ASEL_EXPECT_CMP_(a, b, cmp_op, fail_op_str, fatal)                     \
+#define ASEL_EXPECT_CMP_(a, b, cmp_op, op_str, fatal)                          \
   do {                                                                         \
     if (!cmp_op(a, b)) {                                                       \
-      ASEL_ADD_FAILURE(                                                        \
-          "expected " ASEL_STRINGIFY(a) " " fail_op_str                        \
-                                        " " ASEL_STRINGIFY(b) " ; actual: ",   \
-          (a), " vs ", (b));                                                   \
+      ASEL_ADD_FAILURE("expected " ASEL_STRINGIFY(                             \
+                           a) " " op_str " " ASEL_STRINGIFY(b) " ; actual: ",  \
+                       (a), " vs ", (b));                                      \
       if (fatal) {                                                             \
         return;                                                                \
       }                                                                        \
