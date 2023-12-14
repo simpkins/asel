@@ -13,10 +13,10 @@ namespace asel {
 void log_puts(const char *str) { std::fputs(str, stderr); }
 void log_putc(char c) { std::putc(c, stderr); }
 
-void log_field(unsigned int n) { fprintf(stderr, "%u", n); }
-void log_field(int n) { fprintf(stderr, "%d", n); }
+void log_field(unsigned long n) { fprintf(stderr, "%lu", n); }
+void log_field(long n) { fprintf(stderr, "%ld", n); }
 
-void log_hex(unsigned int n) { fprintf(stderr, "%x", n); }
+void log_hex(unsigned long n) { fprintf(stderr, "%lx", n); }
 
 void log_field(std::error_code ec) {
   log_puts("error_code(");
@@ -40,11 +40,11 @@ void log_putc(char c) {
   // TODO: allow a user-defined putc function
 }
 
-void log_field(unsigned int n) {
+void log_field(unsigned long n) {
   // TODO
 }
 
-void log_hex(unsigned int n) {
+void log_hex(unsigned long n) {
   // TODO
 }
 
@@ -59,7 +59,7 @@ void log_field(int n) {
 
 #endif // !ASEL_HAVE_STDLIB
 
-void log_hex(const void *data, unsigned int length) {
+void log_hex(const void *data, unsigned long length) {
   const uint8_t *data_u8 = static_cast<const uint8_t *>(data);
   log_putc('\n');
   for (unsigned int n = 0; n < length; ++n) {

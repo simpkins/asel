@@ -23,8 +23,15 @@ void log_put_range(const char *str, unsigned int length);
 
 inline void log_field() {}
 inline void log_field(const char *str) { asel::log_puts(str); }
-void log_field(unsigned int n);
-void log_field(int n);
+void log_field(unsigned long n);
+void log_field(long n);
+
+inline void log_field(unsigned int n) {
+  log_field(static_cast<unsigned long>(n));
+}
+inline void log_field(int n) {
+  log_field(static_cast<long>(n));
+}
 
 #if ASEL_HAVE_STDLIB
 void log_field(std::error_code ec);
@@ -35,7 +42,7 @@ void log_field(asel::string_view value) {
   log_put_range(value.data(), value.size());
 }
 
-void log_hex(const void *data, unsigned int length);
+void log_hex(const void *data, unsigned long length);
 
 inline void log_field(asel::buf_view value) {
   log_hex(value.data(), value.size());
