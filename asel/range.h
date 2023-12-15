@@ -1,7 +1,7 @@
 // Copyright (c) 2023, Adam Simpkins
 #pragma once
 
-#include <cstddef>
+#include "asel/inttypes.h"
 
 #if ASEL_HAVE_STDLIB
 #include <string_view>

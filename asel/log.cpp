@@ -48,7 +48,7 @@ void log_hex(unsigned long n) {
   // TODO
 }
 
-void log_field(int n) {
+void log_field(long n) {
   if (n < 0) {
     log_putc('-');
     log_field(static_cast<unsigned int>(-n));

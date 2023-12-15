@@ -15,7 +15,7 @@ namespace asel {
 
 struct nullopt_t {
   enum class Construct { Tag };
-  explicit constexpr nullopt_t(Construct) = default;
+  explicit constexpr nullopt_t(Construct) {};
 };
 
 inline constexpr nullopt_t nullopt{nullopt_t::Construct::Tag};

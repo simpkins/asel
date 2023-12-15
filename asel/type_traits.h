@@ -15,9 +15,10 @@ template <typename T, T Value> struct integral_constant {
   constexpr operator value_type() const noexcept { return value; }
   constexpr value_type operator()() const noexcept { return value; }
 };
+template <bool B> using bool_constant = integral_constant<bool, B>;
 
-using true_type = integral_constant<bool, true>;
-using false_type = integral_constant<bool, false>;
+using true_type = bool_constant<true>;
+using false_type = bool_constant<false>;
 
 template <typename T> struct remove_reference { using type = T; };
 template <typename T> struct remove_reference<T &> { using type = T; };
@@ -39,5 +40,11 @@ template <typename T>
                 "must not use forward() to convert an rvalue to an lvalue");
   return static_cast<T &&>(value);
 }
+
+// Clang and gcc provide builtins for is_same
+template <typename T, typename U>
+struct is_same : public bool_constant<__is_same_as(T, U)> {};
+template <typename T, typename U>
+inline constexpr bool is_same_v = __is_same_as(T, U);
 
 } // namespace asel
