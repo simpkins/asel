@@ -18,7 +18,7 @@ else()
 
     # Check to see if we are the top-level project, or if we are
     # being used via add_subdirectory() in some other project.
-    if(CMAKE_CURRENT_SOURCE_DIR STREQUAL CMAKE_SOURCE_DIR)
+    if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
         set(ASEL_IS_PRIMARY_PROJECT ON)
         message(STATUS "CMake version: ${CMAKE_VERSION}")
     endif()
@@ -44,13 +44,14 @@ else()
         )
     endif()
 
-    if (ASEL_IS_PRIMARY_PROJECT OR ASEL_ENABLE_TESTS)
+    if (ASEL_IS_PRIMARY_PROJECT OR ASEL_BUILD_TESTING)
+        include(CTest)
+
         add_subdirectory("test")
         add_executable(asel_tests test/runner/host/main.cpp)
         target_link_libraries(asel_tests PUBLIC asel_test_cases)
 
         if(NOT CMAKE_CROSSCOMPILING)
-            include(CTest)
             add_test(NAME asel COMMAND asel_tests)
         endif()
     endif()
