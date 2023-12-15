@@ -10,13 +10,23 @@ namespace asel {
 
 #if ASEL_HAVE_STDLIB
 
-void log_puts(const char *str) { std::fputs(str, stderr); }
-void log_putc(char c) { std::putc(c, stderr); }
+void log_puts(const char *str) {
+  std::fputs(str, stderr);
+}
+void log_putc(char c) {
+  std::putc(c, stderr);
+}
 
-void log_field(unsigned long n) { fprintf(stderr, "%lu", n); }
-void log_field(long n) { fprintf(stderr, "%ld", n); }
+void log_field(unsigned long n) {
+  fprintf(stderr, "%lu", n);
+}
+void log_field(long n) {
+  fprintf(stderr, "%ld", n);
+}
 
-void log_hex(unsigned long n) { fprintf(stderr, "%lx", n); }
+void log_hex(unsigned long n) {
+  fprintf(stderr, "%lx", n);
+}
 
 void log_field(std::error_code ec) {
   log_puts("error_code(");

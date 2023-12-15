@@ -9,15 +9,19 @@
 
 namespace asel {
 
-template<typename T>
+template <typename T>
 class range {
 public:
   constexpr range() noexcept = default;
   constexpr range(T *start, size_t size) noexcept
       : start_(start), end_(start + size) {}
 
-  constexpr T *data() const { return start_; }
-  constexpr size_t size() const { return end_ - start_; }
+  constexpr T *data() const {
+    return start_;
+  }
+  constexpr size_t size() const {
+    return end_ - start_;
+  }
 
 private:
   T *start_ = nullptr;

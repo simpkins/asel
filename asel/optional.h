@@ -6,7 +6,8 @@
 #include <optional>
 
 namespace asel {
-template <typename T> using optional = std::optional<T>;
+template <typename T>
+using optional = std::optional<T>;
 }
 
 #else // !ASEL_HAVE_STDLIB
@@ -15,21 +16,20 @@ namespace asel {
 
 struct nullopt_t {
   enum class Construct { Tag };
-  explicit constexpr nullopt_t(Construct) {};
+  explicit constexpr nullopt_t(Construct){};
 };
 
 inline constexpr nullopt_t nullopt{nullopt_t::Construct::Tag};
 
-template<typename T>
+template <typename T>
 class optional {
 public:
-
 private:
   struct Empty {};
 
   union {
-      Empty empty;
-      T data;
+    Empty empty;
+    T data;
   } value_;
   bool has_value_ = false;
 };

@@ -7,7 +7,7 @@ namespace asel {
 
 TestRegistry g_test_registry;
 
-void TestRegistry::register_test(TestCase* test) {
+void TestRegistry::register_test(TestCase *test) {
   if (head == nullptr) {
     head = test;
     tail = test;

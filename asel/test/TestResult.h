@@ -5,11 +5,15 @@ namespace asel {
 
 class TestResult {
 public:
-  void reset() { num_failures_ = 0; }
-  void add_failure() { ++num_failures_; }
+  void reset() {
+    num_failures_ = 0;
+  }
+  void add_failure() {
+    ++num_failures_;
+  }
 
   unsigned int num_failures() const {
-      return num_failures_;
+    return num_failures_;
   }
 
 private:
@@ -17,6 +21,6 @@ private:
 };
 
 // Singleton which will be non-null when running a test
-extern TestResult* g_test_result;
+extern TestResult *g_test_result;
 
 } // namespace asel

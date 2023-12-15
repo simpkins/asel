@@ -12,7 +12,7 @@
     ASEL_TEST_CLASS_NAME(suite, name)                                          \
     () : ::asel::TestCase(ASEL_STRINGIFY(suite), ASEL_STRINGIFY(name)) {}      \
                                                                                \
-    void run() override;                                            \
+    void run() override;                                                       \
   };                                                                           \
   ASEL_TEST_CLASS_NAME(suite, name) ASEL_UNIQUE_NAME(name);                    \
   void ASEL_TEST_CLASS_NAME(suite, name)::run()

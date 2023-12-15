@@ -47,8 +47,8 @@
 #define ASEL_ADD_FAILURE(msg, ...)                                             \
   do {                                                                         \
     ::asel::g_test_result->add_failure();                                      \
-    ::asel::log_message(__FILE__, ":", __LINE__, ": failure: ", msg,           \
-                        ##__VA_ARGS__);                                        \
+    ::asel::log_message(                                                       \
+        __FILE__, ":", __LINE__, ": failure: ", msg, ##__VA_ARGS__);           \
   } while (0)
 
 // We use an immediately-invoked lambda so that we can have a multi-statement
@@ -77,7 +77,9 @@
     if (!cmp_op(a, b)) {                                                       \
       ASEL_ADD_FAILURE("expected " ASEL_STRINGIFY(                             \
                            a) " " op_str " " ASEL_STRINGIFY(b) " ; actual: ",  \
-                       (a), " vs ", (b));                                      \
+                       (a),                                                    \
+                       " vs ",                                                 \
+                       (b));                                                   \
       return false;                                                            \
     }                                                                          \
     return true;                                                               \
@@ -132,7 +134,8 @@ constexpr bool test_cmp_eq(const std::array<uint8_t, N> &a, const buf_view &b) {
 // It should not be customizable, and should behave exactly the opposite of
 // test_cmp_eq()
 inline constexpr struct TestCmpNE {
-  template <typename T, typename U> constexpr bool operator()(T &&t, U &&u) {
+  template <typename T, typename U>
+  constexpr bool operator()(T &&t, U &&u) {
     return !test_cmp_eq(asel::forward<T>(t), asel::forward<U>(u));
   }
 } test_cmp_ne{};
@@ -151,7 +154,8 @@ constexpr bool test_cmp_ge(const T &t, const U &u) {
 // It should not be customizable, and should behave exactly the opposite of
 // test_cmp_ge()
 inline constexpr struct TestCmpLT {
-  template <typename T, typename U> constexpr bool operator()(T &&t, U &&u) {
+  template <typename T, typename U>
+  constexpr bool operator()(T &&t, U &&u) {
     return !test_cmp_ge(asel::forward<T>(t), asel::forward<U>(u));
   }
 } test_cmp_lt{};
@@ -160,7 +164,8 @@ inline constexpr struct TestCmpLT {
 // It should not be customizable, and should behave exactly the opposite of
 // test_cmp_gt()
 inline constexpr struct TestCmpLE {
-  template <typename T, typename U> constexpr bool operator()(T &&t, U &&u) {
+  template <typename T, typename U>
+  constexpr bool operator()(T &&t, U &&u) {
     return !test_cmp_gt(asel::forward<T>(t), asel::forward<U>(u));
   }
 } test_cmp_le{};
