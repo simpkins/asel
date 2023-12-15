@@ -36,6 +36,10 @@ public:
     return end_ - start_;
   }
 
+  T &operator[](size_t index) const {
+    return *(start_ + index);
+  }
+
 private:
   T *start_ = nullptr;
   T *end_ = nullptr;
