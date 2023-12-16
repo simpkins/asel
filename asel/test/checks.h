@@ -1,6 +1,7 @@
 // Copyright (c) 2023, Adam Simpkins
 #pragma once
 
+#include "asel/array.h"
 #include "asel/log.h"
 #include "asel/preproc.h"
 #include "asel/test/TestResult.h"
@@ -114,19 +115,19 @@ constexpr bool test_cmp_eq(buf_view a, buf_view b) {
 }
 
 template <size_t N, size_t M>
-constexpr bool test_cmp_eq(const std::array<uint8_t, N> &a,
-                           const std::array<uint8_t, M> &b) {
+constexpr bool test_cmp_eq(const array<uint8_t, N> &a,
+                           const array<uint8_t, M> &b) {
   return test_cmp_eq(buf_view(a.data(), a.size()),
                      buf_view(b.data(), b.size()));
 }
 
 template <size_t N>
-constexpr bool test_cmp_eq(const buf_view &a, const std::array<uint8_t, N> &b) {
+constexpr bool test_cmp_eq(const buf_view &a, const array<uint8_t, N> &b) {
   return test_cmp_eq(a, buf_view(b.data(), b.size()));
 }
 
 template <size_t N>
-constexpr bool test_cmp_eq(const std::array<uint8_t, N> &a, const buf_view &b) {
+constexpr bool test_cmp_eq(const array<uint8_t, N> &a, const buf_view &b) {
   return test_cmp_eq(buf_view(a.data(), a.size()), b);
 }
 

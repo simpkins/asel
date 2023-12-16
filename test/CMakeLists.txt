@@ -1,5 +1,6 @@
 set(
     asel_test_srcs
+    ArrayTest.cpp
     LogTest.cpp
     RangeTest.cpp
 )

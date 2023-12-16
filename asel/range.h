@@ -25,8 +25,7 @@ public:
   template <typename U, size_t N>
   explicit constexpr range(
       const array<U, N> &data,
-      std::enable_if_t<std::is_same_v<T, std::add_const_t<U>>, int> =
-          0) noexcept
+      enable_if_t<is_same_v<T, add_const_t<U>>, int> = 0) noexcept
       : start_(data.data()), end_(data.data() + data.size()) {}
 
   constexpr T *data() const {
@@ -36,7 +35,7 @@ public:
     return end_ - start_;
   }
 
-  T &operator[](size_t index) const {
+  constexpr T &operator[](size_t index) const {
     return *(start_ + index);
   }
 

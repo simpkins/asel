@@ -8,6 +8,7 @@
 
 namespace asel {
 
+// integral_constant, bool_constant
 template <typename T, T Value>
 struct integral_constant {
   static constexpr T value = Value;
@@ -26,6 +27,7 @@ using bool_constant = integral_constant<bool, B>;
 using true_type = bool_constant<true>;
 using false_type = bool_constant<false>;
 
+// remove_reference
 template <typename T>
 struct remove_reference {
   using type = T;
@@ -41,27 +43,57 @@ struct remove_reference<T &&> {
 template <typename T>
 using remove_reference_t = typename remove_reference<T>::type;
 
+// remove_cv
+template <typename T>
+struct remove_cv {
+  using type = T;
+};
+template <typename T>
+struct remove_cv<T const> {
+  using type = T;
+};
+template <typename T>
+struct remove_cv<T volatile> {
+  using type = T;
+};
+template <typename T>
+struct remove_cv<T const volatile> {
+  using type = T;
+};
+template <typename T>
+using remove_cv_t = typename remove_cv<T>::type;
+
+// add_const
+template <typename T>
+struct add_const {
+  using type = T const;
+};
+template <typename T>
+struct add_const<T const> {
+  using type = T const;
+};
+template <typename T>
+using add_const_t = typename add_const<T>::type;
+
 template <typename T>
 struct is_lvalue_reference : public false_type {};
 template <typename T>
 struct is_lvalue_reference<T &> : public true_type {};
-
-template <typename T>
-[[nodiscard]] constexpr T &&forward(remove_reference_t<T> &value) noexcept {
-  return static_cast<T &&>(value);
-}
-
-template <typename T>
-[[nodiscard]] constexpr T &&forward(remove_reference_t<T> &&value) noexcept {
-  static_assert(!is_lvalue_reference<T>::value,
-                "must not use forward() to convert an rvalue to an lvalue");
-  return static_cast<T &&>(value);
-}
 
 // Clang and gcc provide builtins for is_same
 template <typename T, typename U>
 struct is_same : public bool_constant<__is_same_as(T, U)> {};
 template <typename T, typename U>
 inline constexpr bool is_same_v = __is_same_as(T, U);
+
+// enable_if
+template <bool, typename T = void>
+struct enable_if {};
+template <typename T>
+struct enable_if<true, T> {
+  using type = T;
+};
+template <bool Cond, typename T = void>
+using enable_if_t = typename enable_if<Cond, T>::type;
 
 } // namespace asel

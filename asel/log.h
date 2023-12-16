@@ -1,10 +1,13 @@
 // Copyright (c) 2023, Adam Simpkins
 #pragma once
 
+#include "asel/array.h"
 #include "asel/buf_view.h"
+#include "asel/inttypes.h"
 #include "asel/optional.h"
 #include "asel/range.h"
 #include "asel/type_traits.h"
+#include "asel/utility.h"
 
 #if ASEL_HAVE_STDLIB
 #include <array>
@@ -49,12 +52,10 @@ void log_hex(const void *data, unsigned long length);
 inline void log_field(asel::buf_view value) {
   log_hex(value.data(), value.size());
 }
-#if ASEL_HAVE_STDLIB
 template <size_t N>
-inline void log_field(const std::array<uint8_t, N> value) {
+inline void log_field(const array<uint8_t, N> value) {
   log_hex(value.data(), value.size());
 }
-#endif // ASEL_HAVE_STDLIB
 
 template <typename T>
 void log_field(const asel::optional<T> &value) {
