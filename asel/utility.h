@@ -34,8 +34,14 @@ class integer_sequence {
 };
 
 // Clang has a compiler builtin for __make_integer_seq
+#if __has_builtin(__make_integer_seq)
 template <typename T, T Num>
 using make_integer_sequence = __make_integer_seq<integer_sequence, T, Num>;
+#else
+// For GCC provides __integer_pack instead.
+template <typename T, T Num>
+using make_integer_sequence = integer_sequence<T, __integer_pack(Num)...>;
+#endif
 
 template <size_t... Ints>
 using index_sequence = integer_sequence<size_t, Ints...>;
