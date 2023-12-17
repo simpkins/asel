@@ -14,7 +14,9 @@
                                                                                \
     void run() override;                                                       \
   };                                                                           \
+  namespace {                                                                  \
   ASEL_TEST_CLASS_NAME(suite, name) ASEL_UNIQUE_NAME(name);                    \
+  }                                                                            \
   void ASEL_TEST_CLASS_NAME(suite, name)::run()
 
 namespace asel {
