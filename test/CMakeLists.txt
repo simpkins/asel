@@ -4,6 +4,7 @@ set(
     LogTest.cpp
     RangeTest.cpp
     RatioTest.cpp
+    TimeoutManagerTest.cpp
 )
 
 set(

@@ -96,4 +96,10 @@ struct enable_if<true, T> {
 template <bool Cond, typename T = void>
 using enable_if_t = typename enable_if<Cond, T>::type;
 
+// is_standard_layout
+template <typename T>
+struct is_standard_layout : public bool_constant<__is_standard_layout(T)> {};
+template <typename T>
+inline constexpr bool is_standard_layout_v = __is_standard_layout(T);
+
 } // namespace asel

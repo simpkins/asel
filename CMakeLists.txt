@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD 20)
 set(ASEL_ROOT_DIR ${CMAKE_CURRENT_LIST_DIR})
 set(
     srcs
+    asel/chrono.cpp
     asel/log.cpp
+    asel/TimeoutManager.cpp
     asel/test/run_tests.cpp
     asel/test/TestCase.cpp
     asel/test/TestRegistry.cpp

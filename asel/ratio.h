@@ -1,6 +1,15 @@
 // Copyright (c) 2023, Adam Simpkins
 #pragma once
 
+#if ASEL_HAVE_STDLIB
+#include <ratio>
+namespace asel {
+using std::micro;
+using std::milli;
+using std::nano;
+using std::ratio;
+} // namespace asel
+#else
 #include "asel/inttypes.h"
 
 namespace asel {
@@ -36,3 +45,4 @@ using micro = ratio<1, 1'000'000>;
 using nano = ratio<1, 1'000'000'000>;
 
 } // namespace asel
+#endif
