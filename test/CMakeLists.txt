@@ -3,6 +3,7 @@ set(
     ArrayTest.cpp
     LogTest.cpp
     RangeTest.cpp
+    RatioTest.cpp
 )
 
 set(
