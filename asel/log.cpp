@@ -69,6 +69,10 @@ void log_field(long n) {
 
 #endif // !ASEL_HAVE_STDLIB
 
+void log_field(bool value) {
+  log_field(value ? "true" : "false");
+}
+
 void log_hex(const void *data, unsigned long length) {
   const uint8_t *data_u8 = static_cast<const uint8_t *>(data);
   log_putc('\n');

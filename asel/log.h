@@ -25,16 +25,41 @@ void log_putc(char c);
 void log_put_range(const char *str, unsigned int length);
 
 inline void log_field() {}
+
+namespace detail {
+void custom_log();
+}
+
+template <typename T>
+void log_field(const T &value) {
+  using namespace asel::detail;
+  custom_log(value);
+}
+
 inline void log_field(const char *str) {
   asel::log_puts(str);
 }
 void log_field(unsigned long n);
 void log_field(long n);
+void log_field(bool value);
 
 inline void log_field(unsigned int n) {
   log_field(static_cast<unsigned long>(n));
 }
 inline void log_field(int n) {
+  log_field(static_cast<long>(n));
+}
+
+inline void log_field(unsigned char n) {
+  log_field(static_cast<unsigned long>(n));
+}
+inline void log_field(signed char n) {
+  log_field(static_cast<long>(n));
+}
+inline void log_field(unsigned short n) {
+  log_field(static_cast<unsigned long>(n));
+}
+inline void log_field(short n) {
   log_field(static_cast<long>(n));
 }
 
@@ -55,6 +80,16 @@ inline void log_field(asel::buf_view value) {
 template <size_t N>
 inline void log_field(const array<uint8_t, N> value) {
   log_hex(value.data(), value.size());
+}
+template <typename T, size_t N>
+inline void log_field(const array<T, N> value) {
+  log_field("{");
+  log_field(value[0]);
+  for (size_t n = 0; n < N; ++n) {
+    log_field(", ");
+    log_field(value[n]);
+  }
+  log_field("}");
 }
 
 template <typename T>
