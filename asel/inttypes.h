@@ -3,6 +3,7 @@
 
 #if ASEL_HAVE_STDLIB
 #include <cinttypes>
+#include <cstddef>
 #else
 namespace asel {
 
