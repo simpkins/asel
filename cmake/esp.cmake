@@ -6,6 +6,7 @@ set(
 idf_component_register(
     SRCS ${srcs} ${esp_srcs}
     INCLUDE_DIRS ".."
+    REQUIRES esp_timer
 )
 target_compile_definitions(
     ${COMPONENT_LIB}
